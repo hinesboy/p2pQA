@@ -40,9 +40,11 @@ export const getQuestions = (vm) => {
 export const getQuestionHistory = (vm) => {
   vm.$axios.get('/api/querylist')
     .then(function (rep) {
+      console.log(">>>",rep)
       if (rep.status == 200) {
         vm.querylist = []
         if (rep.data.querylist) {
+          console.log(rep.data.querylist)
           vm.querylist = rep.data.querylist
           for (var i = 0; i < vm.querylist.length; i++) {
             if (vm.querylist[i].status) {
@@ -70,6 +72,7 @@ export const getQuestionAnswer = (vm, id, index) => {
     .then(function (rep) {
       if (rep.status == 200) {
         if (rep.data.answers) {
+
           vm.$set(vm.querylist[index], "answers", rep.data.answers)
         }
       } else {
@@ -81,6 +84,24 @@ export const getQuestionAnswer = (vm, id, index) => {
     })
 }
 
+
+export const getSolveQuestionAnswer = (vm, id) => {
+  vm.$axios.post('/api/answers', {
+    "questionid": id
+  })
+    .then(function (rep) {
+      if (rep.status == 200) {
+        if (rep.data.answers) {
+          vm.answers = rep.data.answers
+        }
+      } else {
+        vm.$Message.error(rep.data.detail)
+      }
+    })
+    .catch(function (rep) {
+      vm.$Message.error(rep.response.data.detail)
+    })
+}
 
 /* 采纳答案 */
 export const acceptAnswer = (vm, id, i) => {
@@ -142,6 +163,26 @@ export const getAmount = (vm) => {
       if (rep.status == 200) {
         vm.queries = rep.data.queries
         vm.answered = rep.data.answered
+      } else {
+        vm.$Message.error(rep.data.detail)
+      }
+    })
+    .catch(function (rep) {
+      vm.$Message.error(rep.response.data.detail)
+    })
+}
+
+/* follow答案 */
+export const followAnswer = (vm, id, i) => {
+  vm.$axios.post('/api/follow', {
+    answerid: id
+  })
+    .then(function (rep) {
+      if (rep.status == 200) {
+        vm.$Message.success("已赞同该答案")
+        vm.isFollow = true
+        vm.followIndex = i
+        vm.answers[i].follow = vm.answers[i].follow + 1
       } else {
         vm.$Message.error(rep.data.detail)
       }

@@ -22,7 +22,12 @@
         </div>
 
         <div class="item">
-          <div class="label">被采纳问题：</div>
+          <div class="label">被采纳答案：</div>
+          <div class="content">未知</div>
+        </div>
+
+        <div class="item">
+          <div class="label">被点赞次数：</div>
           <div class="content">未知</div>
         </div>
       </div>
