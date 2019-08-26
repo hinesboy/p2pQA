@@ -40,11 +40,9 @@ export const getQuestions = (vm) => {
 export const getQuestionHistory = (vm) => {
   vm.$axios.get('/api/querylist')
     .then(function (rep) {
-      console.log(">>>",rep)
       if (rep.status == 200) {
         vm.querylist = []
         if (rep.data.querylist) {
-          console.log(rep.data.querylist)
           vm.querylist = rep.data.querylist
           for (var i = 0; i < vm.querylist.length; i++) {
             if (vm.querylist[i].status) {
@@ -188,6 +186,43 @@ export const followAnswer = (vm, id, i) => {
       }
     })
     .catch(function (rep) {
+      vm.$Message.error(rep.response.data.detail)
+    })
+}
+
+/* 获取已经回答的记录 */
+export const getHistory = (vm) => {
+  vm.$axios.get('/api/answerrecord')
+    .then(function (rep) {
+      if (rep.status == 200) {
+        vm.questions = []
+        if (rep.data.answerRecord) {
+          vm.questions = rep.data.answerRecord
+        }
+      } else {
+        vm.$Message.error(rep.data.detail)
+      }
+    })
+    .catch(function (rep) {
+      vm.$Message.error(rep.response.data.detail)
+    })
+}
+
+/* 修改答案 */
+export const changeAnswer = (vm) => {
+  vm.$axios.post('/api/correct', {
+    answerid: vm.value.answerid,
+    answer: vm.value.answer
+  })
+    .then(function(rep) {
+      if (rep.status == 200) {
+        vm.$Message.success("修改成功")
+        vm.changeFlag = false
+      } else {
+        vm.$Message.error(rep.data.detail)
+      }
+    })
+    .catch(function(rep) {
       vm.$Message.error(rep.response.data.detail)
     })
 }

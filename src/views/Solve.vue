@@ -8,6 +8,7 @@
       placeholder="检索问题">
     </AutoComplete>
     <Button @click="$click_search" class="question-search-btn" type="primary">搜索</Button>
+    <QAhistroy @changeStatus="changeStatus" :flag="histroyFlag"></QAhistroy>
     <Button @click="$click_answer_history" class="answer-history" type="primary" icon="ios-timer-outline">答题记录</Button>
     <div v-if="questions.length" class="qa-wrapper">
       <QItem  v-show="isShowQA(item)" :value="item" :index="i + 1" v-for="(item,i) in questions"></QItem>
@@ -23,6 +24,7 @@
 <script>
   import * as questionRequest from '../request/question'
   import QItem from '../components/qa/QItem'
+  import QAhistroy from "../components/qa/QAhistroy"
   import Cookies from 'js-cookie'
   export default {
     data() {
@@ -30,7 +32,8 @@
         question_: '',
         question: '',
         questions: [],
-        questionData: []
+        questionData: [],
+        histroyFlag: false
       }
     },
     methods: {
@@ -58,7 +61,10 @@
         this.question_ = this.question
       },
       $click_answer_history() {
-        this.$Message.info("暂未开通")
+        this.histroyFlag = true
+      },
+      changeStatus(val) {
+        this.histroyFlag = val
       }
     },
     created() {
@@ -69,7 +75,8 @@
       questionRequest.getQuestions(this)
     },
     components: {
-      QItem
+      QItem,
+      QAhistroy
     }
   }
 </script>
