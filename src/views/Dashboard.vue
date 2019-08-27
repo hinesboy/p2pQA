@@ -30,6 +30,11 @@
           <div class="label">被赞同次数：</div>
           <div class="content">{{follows}}次</div>
         </div>
+
+        <div class="item">
+          <div class="label">总积分：</div>
+          <div class="content">{{score}}分</div>
+        </div>
       </div>
     </div>
 
@@ -94,11 +99,11 @@
         nickname: Cookies.get('qaNickname'),
         email: Cookies.get('qaUsername'),
         queries: 0, // 提出问题数量
-        follows: 0, // 赞同别人次数
+        follows: 0, // 被赞同次数
         answeredQueries: 0, // 被回答问题数量
         answers: 0, // 回答数量
         score: 0, // 总计
-        accepted: 0 // 被赞同次数
+        accepted: 0 // 被采纳水量
       }
     },
     created() {
