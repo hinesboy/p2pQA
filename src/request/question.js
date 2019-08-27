@@ -156,11 +156,18 @@ export const answerQuestion = (vm) => {
 
 /* 获取已提交问题数量  被回答问题数量 */
 export const getAmount = (vm) => {
-  vm.$axios.get('/api/queryamount')
+  vm.$axios.get('/api/statistics')
     .then(function (rep) {
+
       if (rep.status == 200) {
         vm.queries = rep.data.queries
-        vm.answered = rep.data.answered
+        vm.follows = rep.data.follows
+
+        vm.answeredQueries = rep.data.answeredQueries
+        vm.answers = rep.data.answers
+        vm.score = rep.data.score
+        vm.accepted = rep.data.accepted
+
       } else {
         vm.$Message.error(rep.data.detail)
       }
