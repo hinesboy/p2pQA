@@ -342,12 +342,12 @@
       top: 25px;
       left: 15px;
       right: 15px;
-      height: 310px;
+      height: 370px;
     }
 
     .banner-wrapper {
       position: absolute;
-      top: 345px;
+      top: 405px;
       left: 15px;
       right: 15px;
       height: 210px;
@@ -355,7 +355,7 @@
 
     .router-wrapper {
       position: absolute;
-      top: 570px;
+      top: 630px;
       left: 15px;
       right: 15px;
       margin-bottom: 20px;
